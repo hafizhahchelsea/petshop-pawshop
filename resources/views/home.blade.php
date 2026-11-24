@@ -88,6 +88,7 @@
         <a href="/about" class="block text-lg font-semibold text-gray-600">About Us</a>
         <a href="/shop" class="block text-lg font-semibold text-gray-600">Shop</a>
         <a href="/blog" class="block text-lg font-semibold text-gray-600">Blog</a>
+        <a href="/contact" class="block text-lg font-semibold text-gray-600">Contact</a>
         <hr class="border-gray-100">
         @auth
             <p class="text-sm font-bold text-gray-800">{{ Auth::user()->username }}</p>

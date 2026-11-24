@@ -86,6 +86,7 @@
             <a href="/" class="block font-bold text-gray-600 hover:text-pink-600">Home</a>
             <a href="/shop" class="block font-bold text-gray-600 hover:text-pink-600">Shop</a>
             <a href="/blog" class="block font-bold text-pink-600">Blog</a>
+            <a href="/contact" class="block text-lg font-semibold text-gray-600">Contact</a>
             <a href="/cart" class="flex items-center justify-between font-bold text-gray-600">
                 Keranjang <span class="bg-pink-600 text-white px-2 py-0.5 rounded-full text-xs" x-text="cartCount"></span>
             </a>

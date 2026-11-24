@@ -83,6 +83,7 @@
         <a href="/" class="block text-lg font-semibold text-gray-600">Home</a>
         <a href="/about" class="block text-lg font-bold text-pink-600">About Us</a>
         <a href="/shop" class="block text-lg font-semibold text-gray-600">Shop</a>
+        <a href="/contact" class="block text-lg font-semibold text-gray-600">contact</a>
         <hr>
         <div class="flex gap-4 pt-2">
             <a href="/login" class="flex-1 text-center py-3 bg-gray-100 rounded-xl font-bold">Login</a>

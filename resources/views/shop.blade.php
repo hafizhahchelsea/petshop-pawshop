@@ -85,6 +85,8 @@
             <a href="/" class="block text-lg font-semibold text-gray-700">Home</a>
             <a href="/shop" class="block text-lg font-bold text-pink-600">Shop</a>
             <a href="/blog" class="block text-lg font-semibold text-gray-700">Blog</a>
+            <a href="/contact" class="block text-lg font-semibold text-gray-600">contact</a>
+            <a href="/cart" class="block text-lg font-semibold text-gray-600">Keranjang</a>
             <hr>
             <a href="{{ route('cart.index') }}" class="block text-lg font-semibold text-gray-700">Keranjang</a>
         </div>
