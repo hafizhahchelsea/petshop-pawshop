@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 // User Controllers
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
@@ -25,8 +25,8 @@ use App\Http\Controllers\Admin\ProductController;
 | PUBLIC ROUTES (Bisa diakses siapa saja)
 |--------------------------------------------------------------------------
 */
-Route::get('/', [UserController::class, 'home'])->name('landing');
-Route::get('/home', [UserController::class, 'home'])->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('landing');
+Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
