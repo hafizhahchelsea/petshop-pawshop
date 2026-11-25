@@ -13,6 +13,8 @@
 
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* Sembunyikan elemen Alpine sampai siap, supaya menu mobile tidak berkedip saat halaman dimuat */
+        [x-cloak] { display: none !important; }
         .glass-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
@@ -26,7 +28,7 @@
 </head>
 <body class="bg-[#FFF9F9] text-gray-800">
 
-<nav x-data="{ mobileOpen: false }" class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
+<nav x-data="{ mobileOpen: false }" @keydown.escape.window="mobileOpen = false" class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
     <div class="container mx-auto px-6 flex items-center justify-between h-20">
         <a href="/" class="flex items-center group">
             <img src="{{ asset('images/logo.jpg') }}" 
@@ -51,7 +53,7 @@
                         <i class="bi bi-person text-pink-600 text-xl"></i>
                     </div>
                 </button>
-                <div x-show="open" x-transition @click.away="open = false" class="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden">
+                <div x-show="open" x-cloak x-transition @click.away="open = false" class="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden">
                     <div class="px-5 py-4 border-b bg-gray-50">
                         <p class="text-sm font-bold">{{ Auth::user()->username }}</p>
                         <p class="text-xs text-gray-400">{{ Auth::user()->email }}</p>
@@ -69,9 +71,65 @@
             @endguest
         </div>
 
-        <button @click="mobileOpen = !mobileOpen" class="lg:hidden text-pink-600 text-3xl">
+        <!-- Tombol hamburger (mobile) -->
+        <button @click="mobileOpen = !mobileOpen"
+                class="lg:hidden text-pink-600 text-3xl focus:outline-none"
+                :aria-expanded="mobileOpen.toString()"
+                aria-controls="mobile-menu"
+                aria-label="Buka atau tutup menu">
             <i :class="mobileOpen ? 'bi bi-x' : 'bi bi-list'"></i>
         </button>
+    </div>
+
+    <!-- Menu navigasi mobile -->
+    <div id="mobile-menu"
+         x-show="mobileOpen"
+         x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         @click.away="mobileOpen = false"
+         class="lg:hidden absolute top-full left-0 right-0 bg-white border-t border-gray-100 shadow-xl max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <ul class="px-6 py-4 font-semibold text-gray-600 divide-y divide-gray-100">
+            <li><a href="/" class="block py-3 hover:text-pink-600 transition">Home</a></li>
+            <li><a href="/about" class="block py-3 hover:text-pink-600 transition">About Us</a></li>
+            <li><a href="/shop" class="block py-3 hover:text-pink-600 transition">Shop</a></li>
+            <li><a href="/blog" class="block py-3 hover:text-pink-600 transition">Blog</a></li>
+            <li><a href="/contact" class="block py-3 text-pink-600">Contact</a></li>
+            <li>
+                <a href="{{ route('cart.index') }}" class="flex items-center gap-2 py-3 hover:text-pink-600 transition">
+                    <i class="bi bi-cart3"></i> Keranjang
+                </a>
+            </li>
+        </ul>
+
+        <div class="px-6 pb-6">
+            @auth
+            <div class="bg-gray-50 rounded-2xl p-4 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center shrink-0">
+                    <i class="bi bi-person text-pink-600 text-xl"></i>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-sm font-bold truncate">{{ Auth::user()->username }}</p>
+                    <p class="text-xs text-gray-400 truncate">{{ Auth::user()->email }}</p>
+                </div>
+            </div>
+            <form method="POST" action="{{ route('logout') }}" class="mt-3">
+                @csrf
+                <button class="w-full text-center px-4 py-3 text-sm text-red-500 bg-red-50 hover:bg-red-100 rounded-xl transition font-semibold">Logout</button>
+            </form>
+            @endauth
+
+            @guest
+            <div class="flex gap-3 mt-2">
+                <a href="/login" class="flex-1 text-center py-3 rounded-full border-2 border-gray-200 font-bold text-gray-600 hover:border-pink-600 hover:text-pink-600 transition">Login</a>
+                <a href="/register" class="flex-1 text-center py-3 rounded-full bg-pink-600 text-white font-bold shadow-lg shadow-pink-100 hover:bg-pink-700 transition">Join</a>
+            </div>
+            @endguest
+        </div>
     </div>
 </nav>
 
@@ -147,7 +205,7 @@
         </section>
     </div>
 
-    <div class="sticky top-28 space-y-6">
+    <div class="lg:sticky lg:top-28 space-y-6">
         <div class="rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white h-[400px] group relative">
             <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.8821033285627!2d110.4571991!3d-7.0231513!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708c37d6e87f2d%3A0xc3f837130f1406e5!2sJl.%20Gemah%20Raya%2C%20Sendangguwo%2C%20Kec.%20Tembalang%2C%20Kota%20Semarang%2C%20Jawa%20Tengah!5e0!3m2!1sid!2sid!4v1713175200000!5m2!1sid!2sid" 
